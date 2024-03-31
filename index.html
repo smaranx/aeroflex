@@ -6,15 +6,52 @@
 <title>Load Calculator</title>
 
 <style>
-  #overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 9999;
-      pointer-events: none; /* Allows interaction with content underneath */
-  }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.error-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 1); /* Semi-transparent white background */
+    display: none; /* Initially hide the error overlay */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999; /* Ensure the overlay appears on top of other content */
+}
+.error-container {
+    text-align: center;
+}
+.error-icon {
+  font-size: 64px; /* Adjust the font size of the error icon */
+  margin-bottom: 20px;
+}
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+.restart-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.restart-button:hover {
+    background-color: #0056b3;
+}
 
   /* Add additional styles as needed for your overlay */
 </style>
@@ -22,9 +59,13 @@
 <style>
   .font-open-sans { font-family: 'Open Sans', sans-serif; }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Include Font Awesome CSS -->
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="font-open-sans bg-white"> 
+
+ 
+
         <!--<iframe id="packer" src="https://packer.searates.com/services/online/stuffing/?lang=en&background_color=ffffff&border_color=ffffff"
         width="750" height="700" scrolling="No" align="center" frameborder="0" style="align-items: center;">
       </iframe>-->
@@ -34,9 +75,9 @@
         
       </div>
       <div class="iframe-container">
-        <iframe src="https://www.pier2pier.com/loadcalc/" id="myIframe"
+        <!--<iframe src="https://www.pier2pier.com/loadcalc/" id="myIframe"
         width="100%" height="1500" frameborder="0" style="align-items: center;">
-        <script>
+       <script>
           // Listen for messages from the parent window
           window.addEventListener('message', function(event) {
               // Check if the action is to hide elements
@@ -48,16 +89,39 @@
                   });
               }
           });
-      </script>
+        </script>
       
-      </iframe>
+      </iframe>-->
+
+
+
+      <iframe src="https://www.searates.com/load-calculator/" id="myIframe"
+      width="100%" height="1500" frameborder="0" style="align-items: center;">
+     <!--<script>
+        // Listen for messages from the parent window
+        window.addEventListener('message', function(event) {
+            // Check if the action is to hide elements
+            if (event.data.action === 'hideElements') {
+                // Select elements by the provided selector and hide them
+                var elementsToHide = document.querySelectorAll(event.data.selector);
+                elementsToHide.forEach(function(element) {
+                    element.style.display = 'none';
+                });
+            }
+        });
+    </script>-->
+    
+    </iframe>
+
+
+
       <div class="overlay top-overlay">
         <img src="/Aeroflexindia-Logo.png" style="padding-left: 150px ; height:90px;">
       </div>
-      <div class="classToRemove">This is an element with the class to remove</div>
-      <!--<div class="overlay bottom-overlay"></div>
+      <!--<div class="classToRemove">This is an element with the class to remove</div>
+      div class="overlay bottom-overlay"></div>
       </div>
-      <div class="footer"></div>-->
+      <div class="footer"></div>
 
       <script>
         // Add event listener to wait for iframe to load
@@ -68,8 +132,25 @@
             // Execute script inside the iframe to hide elements
             iframeWindow.postMessage({ action: 'hideElements', selector: '.display--4' }, '*');
         });
-    </script>
-      
-<script src="script.js"></script>
+    </script-->
+    <div class="error-overlay" id="error-overlay">
+      <div class="error-container">
+        <span class="error-icon">⚠️</span> 
+          <h1>Unidentified Error</h1>
+          <p>Oops! Something went wrong.</p>
+        
+          <button class="restart-button" onclick="alert('Please close  window browser.');">Close</button>
+      </div>
+  </div>
+  
+  <script>
+      // Show error message after 6 seconds
+      setTimeout(function() {
+          var errorOverlay = document.getElementById('error-overlay');
+          errorOverlay.style.display = 'flex'; // Show the error overlay
+      }, 3000);
+  </script>
+   
+
 </body>
 </html>
